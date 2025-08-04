@@ -23,7 +23,7 @@ class TranscriptionService:
                 #         f"Whisper model not found at {self.model_path}"
                 #     )
 
-                self._model = whisper.load_model("base")
+                self._model = whisper.load_model(settings.MODEL)
                 logger.info(f"Loaded Whisper model")
             except Exception as e:
                 logger.error(f"Failed to load Whisper model: {e}")
@@ -86,4 +86,4 @@ class TranscriptionService:
 
     def get_supported_formats(self) -> list:
         """Get list of supported audio formats"""
-        return [".wav", ".mp3", ".m4a", ".flac", ".ogg"]
+        return [".wav", ".mp3", ".m4a", ".flac", ".ogg", ".webm"]

@@ -18,7 +18,7 @@ async def save_upload_file(file_content: bytes, filename: str, upload_dir: str) 
 
 def is_audio_file(filename: str) -> bool:
     """Check if file is a supported audio format"""
-    allowed_extensions = {".wav", ".mp3", ".m4a", ".flac", ".ogg"}
+    allowed_extensions = {".wav", ".mp3", ".m4a", ".flac", ".ogg", ".webm"}
     return Path(filename).suffix.lower() in allowed_extensions
 
 

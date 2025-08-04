@@ -9,7 +9,7 @@ load_dotenv()
 class Settings(BaseSettings):
     # Database
     DATABASE_URL: str = os.getenv("DATABASE_URL") or "sqlite+aiosqlite:///./test.db"
-
+    MODEL: str = os.getenv("MODEL") or "base.en"
     # JWT Configuration
     SECRET_KEY: str = (
         os.getenv("SECRET_KEY") or "your-super-secret-key-change-this-in-production"
