@@ -1,16 +1,3 @@
-# from fastapi import FastAPI
-# import whisper
-
-# def main():
-#     model = whisper.load_model("base")
-#     result = model.transcribe("/home/efemena/Downloads/Model_test_1.m4a")
-#     print(result["text"])
-
-
-# if __name__ == "__main__":
-#     main()
-
-
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -59,7 +46,7 @@ app = FastAPI(
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:8000" ],
+    allow_origins=["http://localhost:5173", "http://localhost:8000", "http://localhost:4173" ],
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"],
