@@ -24,7 +24,7 @@ class AuthController:
                 key="refresh_token",
                 value=tokens["refresh_token"],
                 httponly=True,
-                path="/refresh",
+                path="/",
                 samesite="strict",
                 secure=True,
                 expires=settings.REFRESH_TOKEN_EXPIRE_DAYS * 24 * 60 * 60,
@@ -59,7 +59,7 @@ class AuthController:
             key="refresh_token",
             value=tokens["refresh_token"],
             httponly=True,
-            path="/refresh",
+            path="/",
             samesite="strict",
             secure=True,
             expires=settings.REFRESH_TOKEN_EXPIRE_DAYS * 24 * 60 * 60,
@@ -86,4 +86,4 @@ class AuthController:
     @staticmethod
     async def get_me(current_user: User) -> UserRead:
         """Get current user profile"""
-        return UserRead.from_orm(current_user)
+        return UserRead.model_validate(current_user)

@@ -12,6 +12,7 @@ dependencies = [
     "fastapi[standard]>=0.116.1",
     "ffmpeg>=1.4",
     "ffmpeg-python>=0.2.0",
+    "httptools>=0.6.4",
     "loguru>=0.7.3",
     "openai-whisper>=20250625",
     "passlib[bcrypt]>=1.7.4",
@@ -21,4 +22,5 @@ dependencies = [
     "slowapi>=0.1.9",
     "sqlalchemy>=2.0.42",
     "sqlmodel>=0.0.24",
+    "uvloop>=0.21.0",
 ]
