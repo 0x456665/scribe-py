@@ -1,18 +1,19 @@
 import os
 import tempfile
-from pathlib import Path
-from typing import Dict, Any, Optional
-import whisper
+from typing import Dict, Any
+# import whisper
 from loguru import logger
 from config.settings import settings
 from utils.file_utils import convert_to_wav, get_audio_duration, cleanup_file
 from errors.custom_exceptions import TranscriptionError
+from transformers import AutomaticSpeechRecognitionPipeline, pipeline
+import librosa
 
 
 class TranscriptionService:
     def __init__(self):
         # self.model_path = settings.WHISPER_MODEL_PATH
-        self._model = None
+        self._model : AutomaticSpeechRecognitionPipeline | None = None
 
     def _load_model(self):
         """Load Whisper model lazily"""
@@ -23,8 +24,8 @@ class TranscriptionService:
                 #         f"Whisper model not found at {self.model_path}"
                 #     )
 
-                self._model = whisper.load_model(settings.MODEL)
-                logger.info(f"Loaded Whisper model")
+                self._model = pipeline("automatic-speech-recognition", model="0x456665/whisper-small-medical")
+                logger.info("Loaded Whisper model")
             except Exception as e:
                 logger.error(f"Failed to load Whisper model: {e}")
                 raise TranscriptionError(
@@ -45,10 +46,10 @@ class TranscriptionService:
 
             # Convert to WAV if necessary
             if not file_path.lower().endswith(".wav"):
-                temp_wav_path = tempfile.mktemp(suffix=".wav")
-                if not convert_to_wav(file_path, temp_wav_path):
+                temp_wav_path = tempfile.mkstemp(suffix=".wav")
+                if not convert_to_wav(file_path, temp_wav_path[1]):
                     raise TranscriptionError("Failed to convert audio file")
-                transcription_path = temp_wav_path
+                transcription_path = temp_wav_path[1]
             else:
                 transcription_path = file_path
 
@@ -56,11 +57,11 @@ class TranscriptionService:
             logger.info(f"Starting transcription of {original_filename}")
 
             try:
-                #     model = whisper.load_model("base")
-                #     result = model.transcribe("/home/efemena/Downloads/Model_test_1.m4a")
-                #     print(result["text"])
-
-                result = self._model.transcribe(transcription_path) # type: ignore
+                audio, _ = librosa.load(transcription_path, sr=16000)
+                if (not self._model):
+                    raise TranscriptionError("model not loaded properly")
+                result =  self._model(audio)
+                print(result)
                 transcription_text = result.get("text", "")
 
                 if not transcription_text:
@@ -81,9 +82,9 @@ class TranscriptionService:
 
         finally:
             # Clean up temporary files
-            if temp_wav_path and os.path.exists(temp_wav_path):
-                cleanup_file(temp_wav_path)
+            if temp_wav_path and os.path.exists(temp_wav_path[1]):
+                cleanup_file(temp_wav_path[1])
 
-    def get_supported_formats(self) -> list:
+    def get_supported_formats(self) -> list[str]:
         """Get list of supported audio formats"""
         return [".wav", ".mp3", ".m4a", ".flac", ".ogg", ".webm"]
