@@ -141,7 +141,7 @@ class TranscriptionController:
         )
 
         result = await session.execute(statement)
-        transcript = result.first()
+        transcript = result.scalar_one_or_none()
 
         if not transcript:
             raise HTTPException(
