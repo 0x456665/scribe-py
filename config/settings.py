@@ -34,6 +34,7 @@ class Settings(BaseSettings):
     # Rate Limiting
     RATE_LIMIT_REQUESTS: int = int(os.getenv("RATE_LIMIT_REQUESTS") or 100)
     RATE_LIMIT_WINDOW: int = int(os.getenv("RATE_LIMIT_WINDOW") or 3600)
+    PORT: int = int(os.getenv("PORT") or 8000)
 
     class Config:
         env_file = ".env"
