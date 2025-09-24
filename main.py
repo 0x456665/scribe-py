@@ -13,7 +13,7 @@ from models import create_db_and_tables
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan(app: FastAPI): 
     """Application lifespan events"""
     # Startup
     logger.info("Starting AI Scribe API...")
@@ -33,7 +33,7 @@ async def lifespan(app: FastAPI):
 
 # Configure logging
 logger.remove()
-logger.add(sys.stderr, level="INFO" if not settings.DEBUG else "DEBUG")
+_ = logger.add(sys.stderr, level="INFO" if not settings.DEBUG else "DEBUG")
 
 # Create FastAPI app
 app = FastAPI(
@@ -58,7 +58,7 @@ app.include_router(transcription_router, prefix=settings.API_V1_PREFIX)
 
 
 @app.exception_handler(CustomException)
-async def custom_exception_handler(request: Request, exc: CustomException):
+async def custom_exception_handler(_: Request, exc: CustomException):
     """Handle custom exceptions"""
     return JSONResponse(status_code=exc.status_code, content={"detail": exc.detail})
 
