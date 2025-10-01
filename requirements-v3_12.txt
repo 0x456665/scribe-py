@@ -41,7 +41,7 @@ audioread==3.0.1
 soxr==0.5.0
 ffmpeg-python==0.2.0
 
-# ML/AI libraries
+# ML/AI libraries (CPU-only versions)
 torch==2.4.1
 transformers==4.44.2
 tokenizers==0.19.1
@@ -60,21 +60,6 @@ numba==0.60.0
 llvmlite==0.43.0
 decorator==5.1.1
 pooch==1.8.2
-
-# NVIDIA CUDA libraries (if using GPU)
-nvidia-cublas-cu12==12.1.3.1
-nvidia-cuda-cupti-cu12==12.1.105
-nvidia-cuda-nvrtc-cu12==12.1.105
-nvidia-cuda-runtime-cu12==12.1.105
-nvidia-cudnn-cu12==9.1.0.70
-nvidia-cufft-cu12==11.0.2.54
-nvidia-curand-cu12==10.3.2.106
-nvidia-cusolver-cu12==11.4.5.107
-nvidia-cusparse-cu12==12.1.0.106
-nvidia-nccl-cu12==2.20.5
-nvidia-nvtx-cu12==12.1.105
-nvidia-nvjitlink-cu12==12.6.68
-triton==3.0.0
 
 # Utility libraries
 aiofiles==24.1.0
